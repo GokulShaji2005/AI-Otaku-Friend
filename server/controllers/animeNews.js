@@ -24,7 +24,7 @@ const filtered = feed.items.filter(item => {
 
         try{
           const articlePage=await axios.get(item.link);
-          const $=Cheerio.load(articlePage.data);
+          const $=cheerio.load(articlePage.data);
           imageUrl=$('meta[property="og:image"]').attr('content') || null;
         }
         catch(err)

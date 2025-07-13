@@ -1,0 +1,33 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+  <title>Otaku AI Chat</title>
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+  <div>
+  <h2>Otaku AI Chat</h2>
+  <input id="msgInput" placeholder="Type your anime message" />
+  <button onclick="sendMessage()">Send</button>
+  <div id="chat"></div>
+</div>
+  <script>
+    const socket = io(); // Adjust URL if needed
+    
+
+    socket.on("connect", () => {
+      console.log("Connected:", socket.id);
+    });
+
+    socket.on("response", (data) => {
+      document.getElementById("chat").innerHTML += `<p>🤖: ${data}</p>`;
+    });
+
+    function sendMessage() {
+      const msg = document.getElementById("msgInput").value;
+      document.getElementById("chat").innerHTML += `<p>🧑: ${msg}</p>`;
+      socket.emit("usermessage", msg);
+    }
+  </script>
+</body>
+</html> -->
