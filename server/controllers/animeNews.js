@@ -2,11 +2,18 @@ import axios from "axios";
 import Parser from 'rss-parser'
 import * as cheerio from 'cheerio';
 
+let cachedArticles=null;
+let lastFetched=0;
+const CACHE=10*60*1000;
 
 const parser=new Parser();
 const RSS_URL = 'https://www.animenewsnetwork.com/all/rss.xml';
 
-export async function animeNews(req,res) {
+export async function AnimeNews(req,res) {
+  const now=Date.now();
+  if(cachedArticles && (now-lastFetched)<CACHE){
+    return res.json({articles:cachedArticles});
+  }
   try{
     const feed= await parser.parseURL(RSS_URL);
     
@@ -16,10 +23,10 @@ const filtered = feed.items.filter(item => {
   const text = (item.title + item.contentSnippet).toLowerCase();
   return animeKeywords.some(keyword => text.includes(keyword));
 });
-    const newsItems=feed.items.slice(0,20);
+   
 
     const articles=await Promise.all(
-      newsItems.map(async item=>{
+      filtered.map(async item=>{
         let imageUrl=null;
 
         try{
@@ -39,6 +46,8 @@ const filtered = feed.items.filter(item => {
         };
       })
     );
+    cachedArticles=articles;
+    lastFetched=now;
     res.json({articles})
   }
   catch (error) {
