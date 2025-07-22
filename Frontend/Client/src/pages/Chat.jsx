@@ -72,7 +72,7 @@ const Chat = () => {
                 <div className="flex flex-row justify-center md:justify-end gap-4 md:gap-8 text-lg">
                   <NavLink to="/" end className={({ isActive }) => isActive ? "underline-offset-1" : ""}>Home</NavLink>
                   <NavLink to="/Chat" end className={({ isActive }) => isActive ? "underline" : ""}>Chat</NavLink>
-                  <NavLink to="/News" end className={({ isActive }) => isActive ? "underline" : ""}>News</NavLink>
+               
                 </div>
               </div>
             </nav>
