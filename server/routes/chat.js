@@ -1,11 +1,14 @@
 import express from "express";
-import { chatWithOtakuAI} from "../controllers/chatcontroller.js";
+
+import { animeNews } from "../controllers/animeNews.js";
+
 
 const router = express.Router();
 
-router.post("/", chatWithOtakuAI);
-// router.get("/news", animeNews);
 
+
+router.get('/',animeNews
+)
 
 
 export default router;

@@ -4,19 +4,103 @@ import * as cheerio from 'cheerio';
 
 
 const parser=new Parser();
-const RSS_URL = 'https://www.animenewsnetwork.com/all/rss.xml';
+const RSS_URL = ['https://www.animenewsnetwork.com/all/rss.xml',
+   'https://myanimelist.net/rss/news.xml',
+    'https://otakuusamagazine.com/feed/',
+  'https://www.animeherald.com/feed/',
+  'https://www.cbr.com/tag/anime/feed/',
+  'https://kotaku.com/tag/anime/rss',
+  'https://www.animefeminist.com/feed/',
+   'https://honeysanime.com/feed/',
+    'https://nerdist.com/tag/anime/feed/',
+  'https://www.themarysue.com/tag/anime/feed/',
+
+];
 
 export async function animeNews(req,res) {
-  try{
-    const feed= await parser.parseURL(RSS_URL);
+try {
+  const feeds = await Promise.all(
+    RSS_URL.map(async url => {
+      try {
+        return await parser.parseURL(url);
+        console.log(`✅ Parsed ${url} — ${feeds.items.length} items`);
+      } catch (err) {
+        console.error(`Error parsing ${url}:`, err.message);
+        return { items: [] }; 
+      }
+    })
+  );
+    const feedItems=feeds.flatMap(feed=>feed.items)
     
-const animeKeywords = ['anime', 'manga', 'otaku', 'japan', 'japanese animation'];
+const animeKeywords = [
+  "Dr. Stone",
+  "Black Clover",
+  "Demon Slayer",
+  "Naruto",
+  "That Time I Got Reincarnated as a Slime",
+  "Pokemon",
+ 
+  "Digimon",
+  "One Punch Man",
+  "Classroom of the Elite",
+  "Attack on Titan",
+  "Jujutsu Kaisen",
+  "One Piece",
+  "Solo Leveling",
+  "Kaiju No. 8",
+  "My Hero Academia",
+  "Fairy Tail",
+  "Bleach",
+  "Tonikaku Kawaii",
+  "The Angel Next Door Spoils Me Rotten",
+  "The Genius Prince's Guide to Raising a Nation Out of Debt",
+  "Tokyo Revengers",
+  "Parasyte: The Maxim",
+  "Haikyuu!!",
+  "Spy x Family",
+  "Dandadan",
+  "Mashle",
+  "Death Note",
+  "Fullmetal Alchemist: Brotherhood",
+  "Dragon Ball",
+  "Chainsaw Man",
+  "Blue Lock",
+  "Noragami",
+  "Erased",
+  "Vinland Saga",
+  "Code Geass",
+  "Steins;Gate",
+  "Mob Psycho 100",
+  "Akame ga Kill!",
+  "Re:Zero - Starting Life in Another World",
+  
 
-const filtered = feed.items.filter(item => {
-  const text = (item.title + item.contentSnippet).toLowerCase();
-  return animeKeywords.some(keyword => text.includes(keyword));
-});
-    const newsItems=feed.items.slice(0,20);
+  "Hunter x Hunter",
+
+  "No Game No Life",
+  "Zom 100: Bucket List of the Dead",
+  
+];
+function detectAnime(text){
+  return animeKeywords.filter(name=> text.toLowerCase().includes(name.toLowerCase()));
+  
+}
+
+const  newsItems=feedItems.map(item=>{
+   const text = ((item.title || '') + (item.contentSnippet || '')).toLowerCase();
+   const detected=detectAnime(text);
+
+   if(detected.length>0){
+    return {...item,detectedAnime:detected}
+   }
+
+   return null;
+
+})
+
+
+.filter(item=> item!==null);
+   
 
     const articles=await Promise.all(
       newsItems.map(async item=>{
@@ -35,11 +119,13 @@ const filtered = feed.items.filter(item => {
           title: item.title,
           link: item.link,
           pubDate: item.pubDate,
+           detectedAnime: item.detectedAnime,
           image: imageUrl,
         };
       })
     );
     res.json({articles})
+    console.log(articles)
   }
   catch (error) {
     console.error("Anime News Error:", error.message);

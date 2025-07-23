@@ -12,6 +12,7 @@ import router from './routes/chat.js';
 import chatSocket from './controllers/chatsocket.js';
 import path from "path";
 import { fileURLToPath } from "url";
+import { animeNews } from './controllers/animeNews.js';
 
 const app = express();
 const server=http.createServer(app);
@@ -40,7 +41,8 @@ app.use(cors());
 app.use(express.json()); 
 
 // Routes
-app.use('/api', router); 
+app.use('/animeNews', router); 
+
 
 server.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
