@@ -48,7 +48,7 @@ useEffect(() => {
             </div>
           </nav>
 
-{Articles.length==0?( <div className="flex flex-col items-center justify-center py-16">
+{Articles.length==0?( <div className="flex flex-col items-center justify-center py-25">
               <div className="loader mb-4"></div>
               <p className="text-white text-lg">Loading...</p>
             </div>)
