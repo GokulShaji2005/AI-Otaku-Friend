@@ -7,6 +7,7 @@ import { NavLink } from 'react-router-dom'
 
 
 
+
 const socket=io(import.meta.env.VITE_BACKEND_URL)
 
 socket.on("connect",()=>{
@@ -72,7 +73,7 @@ const Chat = () => {
                 <div className="flex flex-row justify-center md:justify-end gap-4 md:gap-8 text-lg">
                   <NavLink to="/" end className={({ isActive }) => isActive ? "underline-offset-1" : ""}>Home</NavLink>
                   <NavLink to="/Chat" end className={({ isActive }) => isActive ? "underline" : ""}>Chat</NavLink>
-               
+                  <NavLink to="/News" end className={({ isActive }) => isActive ? "underline" : ""}>News</NavLink>
                 </div>
               </div>
             </nav>
@@ -94,13 +95,32 @@ const Chat = () => {
                     ref={ScrollRef}
                   >
                     {msg.sender && (
-                      <div className="mb-2 md:mb-6 p-2 md:p-3 rounded-lg text-sm bg-white/50 text-white/80 w-fit max-w-[80%] md:max-w-[60%] break-words">
-                        {msg.sender}
-                      </div>
-                    )}
+                      <>
+
+<div className="flex justify-end items-start gap-2 m-2">
+  <div className=" break-words max-w-[85%] md:max-w-[65%] bg-white/50 text-white/90 text-sm px-4 py-2 rounded-lg  whitespace-pre-wrap">
+    {msg.sender}
+  </div>
+  <img
+    src="/assets/profile.webp"
+    alt="Avatar"
+    className="w-10 h-10 rounded-full shadow-md"
+  />
+</div>
+
+
+                  </>  )
+                    }
                     {msg.ai && (
-                      <div className="mb-2 md:mb-6 p-2 md:p-3 rounded-lg flex justify-end text-sm bg-white/20 text-white w-fit max-w-[90%] md:max-w-[80%] break-words">
-                        <span className="font-semibold text-[#D8F4F6]">AI:</span> {msg.ai}
+                      <div className="flex justify-start items-start gap-2 m-2">
+                        <img
+                          src="/assets/chatbot.jpg"
+                          alt="AI Avatar"
+                          className="w-10 h-10 rounded-full shadow-md"
+                        />
+                        <div className="break-words max-w-[85%] md:max-w-[65%] bg-white/50 text-white/90 text-sm px-4 py-2 rounded-lg whitespace-pre-wrap">
+                          {msg.ai}
+                        </div>
                       </div>
                     )}
                   </div>

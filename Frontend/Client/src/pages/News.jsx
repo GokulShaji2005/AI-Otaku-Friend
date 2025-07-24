@@ -1,11 +1,42 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import axios from 'axios'
+import { animeNews } from '../../../../server/controllers/animeNews';
+import { useState } from 'react';
+import { useEffect } from 'react';
+const NewsApi=import.meta.env.VITE_BACKEND_URL;
+
 
 const News = () => {
+
+  const [Articles,setArticles]=useState([]);
+useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        const res = await axios.get(`${NewsApi}/animeNews`);
+          console.log("API response:", res.data); 
+        if(res.data && Array.isArray(res.data.articles)){
+
+        setArticles(res.data.articles);
+        }
+
+
+        else{
+          console.log("No vslid articles");
+          setArticles([]);
+        }
+      } catch (error) {
+        console.error("Error fetching anime news:", error);
+      }
+    };
+
+    fetchNews();
+  }, []);
+
+  
   return (
-    <div className="bg-[url('/assets/blueBackground.jpg')] bg-cover bg-center relative flex justify-center items-center h-screen">
-        <div className="absolute inset-0 bg-black/70 text-[#D8F4F6] flex flex-col font-audiowide">
-          
+<div className="bg-[url('/assets/blueBackground.jpg')] bg-repeat bg-top min-h-screen">
+  <div className="bg-black/70 text-[#D8F4F6] flex flex-col font-audiowide min-h-screen">
           <nav className="p-6">
             <div className="flex justify-between items-center">
               <div className="text-2xl font-bold tracking-wide">AniMate</div>
@@ -16,7 +47,38 @@ const News = () => {
               </div>
             </div>
           </nav>
-        
+
+{Articles.length==0?( <div className="flex flex-col items-center justify-center py-16">
+              <div className="loader mb-4"></div>
+              <p className="text-white text-lg">Loading...</p>
+            </div>)
+:(<div className="flex flex-1 justify-center items-center px-2 py-4 ">
+  <div
+    className="w-full max-w-2xl min-h-[30vh] md:max-w-4xl bg-gradient-to-br from-[#1e3c72] to-[#2a5298] bg-no-repeat p-2 md:p-4 rounded-2xl shadow-2xl flex flex-col border border-white/20 "
+  
+  >
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      {Articles.map((article, i) => (
+        <div key={i} className="p-4 shadow-md rounded-xl bg-white hover:shadow-xl transition">
+          <img src={article.image} alt="Article" className="w-full h-48 object-cover rounded mb-2" />
+          <h3 className="text-md font-semibold line-clamp-2 text-[#1e3c72]">{article.title}</h3>
+          <p className="text-sm text-gray-500 tesxt-sm">{new Date(article.pubDate).toLocaleDateString()}</p>
+          <a
+            href={article.link}
+            className="text-blue-600 hover:underline text-sm"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Read More
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+)}
+ 
+
           </div>
           </div>
   )

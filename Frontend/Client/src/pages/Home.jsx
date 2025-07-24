@@ -21,7 +21,7 @@ const Home = () => {
             <div className="ml-8 md:ml-12 font-audiowide text-3xl md:text-5xl font-bold space-y-2 flex flex-col items-start">
               <div>Chat with Your</div>
               <div className='mt-6'>Ultimate Otaku Friend</div>
-              <div className="text-4xl md:text-6xl text-[#00ffc3] mt-6">AniMate</div>
+              <div className="text-4xl md:text-6xl text-mt-6">AniMate</div>
               
               <button type="button" className='mt-8 px-8 py-3 bg-[#00ffc3] text-black rounded-lg font-semibold text-xl shadow-lg hover:bg-[#00e6b2] transition-all'>
                 Chat Now
