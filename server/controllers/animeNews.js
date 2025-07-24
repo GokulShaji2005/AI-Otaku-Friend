@@ -6,9 +6,9 @@ import * as cheerio from 'cheerio';
 const parser=new Parser();
 const RSS_URL = ['https://www.animenewsnetwork.com/all/rss.xml',
    'https://myanimelist.net/rss/news.xml',
+   'https://comicbook.com/anime/rss/',
     'https://otakuusamagazine.com/feed/',
   'https://www.animeherald.com/feed/',
-  'https://www.cbr.com/tag/anime/feed/',
   'https://kotaku.com/tag/anime/rss',
   'https://www.animefeminist.com/feed/',
    'https://honeysanime.com/feed/',
