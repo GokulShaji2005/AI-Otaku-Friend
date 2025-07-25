@@ -1,5 +1,5 @@
 import { chatWithOtakuAI } from "./chatcontroller.js";
-import { Socket } from "socket.io";
+
 
 
 export default function chatSocket(socket){
@@ -21,7 +21,7 @@ socket.on("chatFromUser",async(message)=>{
         const AIreply= await chatWithOtakuAI(limit);
 
         chatHistory.push({role:'assistant', content:AIreply});
-        // console.log(AIreply)
+       
         socket.emit("responseFromAI",AIreply)
        
 

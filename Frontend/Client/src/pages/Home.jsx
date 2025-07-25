@@ -6,9 +6,6 @@ import { FaSquareGithub } from "react-icons/fa6";
 
 const Home = () => {
   const [menuIcon, setMenuIcon] = useState(false);
-
-  // const [open,setOpen]=useState(false)
-  //  <Chat setMenuIcon={setMenuIcon} />
   const toggle = () => {
     setMenuIcon((e) => !e);
   };
