@@ -5,6 +5,7 @@ import * as cheerio from 'cheerio';
 
 const parser=new Parser();
 const RSS_URL = ['https://www.animenewsnetwork.com/all/rss.xml',
+ ' https://fandomwire.com/feed/',
    'https://myanimelist.net/rss/news.xml',
    'https://comicbook.com/anime/rss/',
     'https://otakuusamagazine.com/feed/',
@@ -22,8 +23,9 @@ try {
   const feeds = await Promise.all(
     RSS_URL.map(async url => {
       try {
-        return await parser.parseURL(url);
-        console.log(`✅ Parsed ${url} — ${feeds.items.length} items`);
+        const feed= await parser.parseURL(url);
+        console.log(`✅ Parsed ${url} — ${feed.items.length} items`);
+        return feed;
       } catch (err) {
         console.error(`Error parsing ${url}:`, err.message);
         return { items: [] }; 
@@ -33,19 +35,22 @@ try {
     const feedItems=feeds.flatMap(feed=>feed.items)
     
 const animeKeywords = [
+   "One Piece",
+   "Naruto",
   "Dr. Stone",
+   "Attack on Titan",
+  "Jujutsu Kaisen",
   "Black Clover",
   "Demon Slayer",
-  "Naruto",
+  
   "That Time I Got Reincarnated as a Slime",
   "Pokemon",
  
   "Digimon",
   "One Punch Man",
   "Classroom of the Elite",
-  "Attack on Titan",
-  "Jujutsu Kaisen",
-  "One Piece",
+ 
+ 
   "Solo Leveling",
   "Kaiju No. 8",
   "My Hero Academia",
