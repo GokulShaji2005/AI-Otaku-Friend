@@ -16,14 +16,97 @@
 
 
 /* HTML: <div class="loader"></div> */
-.loader {
+/* .loader {
   width: 80px;
   aspect-ratio: 1;
-  background: #8d7958;
+  background: #2C2C2C
+;
   clip-path: polygon(100.00% 50.00%,64.14% 64.14%,50.00% 100.00%,35.86% 64.14%,0.00% 50.00%,35.86% 35.86%,50.00% 0.00%,64.14% 35.86%);
   -webkit-mask:radial-gradient(circle 5px,#0000 90%,#000);
-  animation: l1 1.5s infinite linear;
+  animation: l1 1.3s infinite linear;
 }
 @keyframes l1{ 
   100%{transform: rotate(1turn)}
-}
+} */
+
+   .loader {
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+
+        .loader::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 3px solid transparent;
+            border-top: 3px solid #ff6b9d;
+            border-right: 3px solid #4ecdc4;
+            border-radius: 50%;
+            animation: spin 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+        }
+
+        .loader::after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            width: calc(100% - 16px);
+            height: calc(100% - 16px);
+            border: 2px solid transparent;
+            border-bottom: 2px solid #a8e6cf;
+            border-left: 2px solid #ffd93d;
+            border-radius: 50%;
+            animation: spin 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite reverse;
+        }
+
+        .loader-inner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(45deg, #ff6b9d, #4ecdc4);
+            border-radius: 50%;
+            animation: pulse 1s ease-in-out infinite alternate;
+        }
+
+        .loader-dots {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0% { 
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0.7;
+            }
+            100% { 
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        @keyframes dotFade {
+            0%, 80% { opacity: 0; transform: scale(0.5); }
+            40% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Glow effect */
+        .loader::before,
+        .loader::after {
+            filter: drop-shadow(0 0 8px rgba(255, 107, 157, 0.3));
+        }
