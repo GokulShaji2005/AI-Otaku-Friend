@@ -1,8 +1,17 @@
 import React from 'react'
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom'
+import Chat from './Chat';
 
 
 const Home = () => {
+
+  const [menuIcon,setMenuIcon]=useState(false);
+  // const [open,setOpen]=useState(false)
+  //  <Chat setMenuIcon={setMenuIcon} />
+ const toggle=()=>{
+  setMenuIcon(e=>!e);
+ }
   return (
     <>
       <div className="bg-[url('/assets/blueBackground.jpg')] bg-cover bg-center relative h-screen">
@@ -10,7 +19,27 @@ const Home = () => {
           <nav className="p-6">
             <div className="flex justify-between items-center">
               <div className="text-2xl font-bold tracking-wide">AniMate</div>
-              <div className="flex gap- md:gap-15 text-lg">
+              {/* Menu Icon */}
+        <div className="md:hidden absolute top-6 right-6 z-50  " onClick={toggle}>
+        <div className="space-y-1">
+          <div className="w-8 h-1 bg-[#D8F4F6] rounded"></div>
+          <div className="w-8 h-1 bg-[#D8F4F6] rounded"></div>
+          <div className="w-8 h-1 bg-[#D8F4F6] rounded"></div>
+        </div>
+      </div>
+
+     
+{menuIcon && (
+  <div className="absolute top-16 right-4 z-40 w-48 text-center text-white bg-black/80 rounded-lg shadow-xl py-4 px-3 flex flex-col space-y-3 text-lg font-medium md:hidden">
+    <NavLink to="/" end   className="hover:text-cyan-400" onClick={toggle}>Home</NavLink>
+    <NavLink to="/Chat" end  className="hover:text-cyan-400" onClick={toggle}>Chat</NavLink>
+    <NavLink to="/News" end  className="hover:text-cyan-400" onClick={toggle}>News</NavLink>
+  </div>
+)}
+
+   
+
+              <div className="flex gap- md:gap-15 text-lg max-md:hidden">
                 <NavLink to="/" end className={({ isActive }) => isActive ? "underline-offset-1" : ""}>Home</NavLink>
                 <NavLink to="/Chat" end className={({ isActive }) => isActive ? "underline" : ""}>Chat</NavLink>
                 <NavLink to="/News" end className={({ isActive }) => isActive ? "underline" : ""}>News</NavLink>
@@ -47,7 +76,7 @@ const Home = () => {
                 </div>
               </div>
 
-              <p className="text-lg md:text-xl text-white/80 max-w-2xl leading-relaxed animate-fade-in-up animation-delay-500">
+              <p className="text-sm md:text-xl text-white/80 max-w-2xl leading-relaxed animate-fade-in-up animation-delay-500">
                 Dive into the world of anime with your AI companion. Get recommendations, discuss your favorite shows, and explore the endless universe of Japanese animation.
               </p>
 
@@ -56,7 +85,7 @@ const Home = () => {
                 <button
                   type="button"
                   className="group relative mt-8 px-10 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-2xl font-bold text-lg md:text-xl shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 overflow-hidden"
-                >
+                onClick={() => window.location.href = '/Chat'}>
                   <span className="relative z-10 flex items-center gap-3">
                     Chat Now
                     <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">

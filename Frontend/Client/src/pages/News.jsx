@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import axios from 'axios'
-import { animeNews } from '../../../../server/controllers/animeNews';
+// import { animeNews } from '../../../../server/controllers/animeNews';
 import { useState } from 'react';
 import { useEffect } from 'react';
 const NewsApi=import.meta.env.VITE_BACKEND_URL;
@@ -10,6 +10,10 @@ const NewsApi=import.meta.env.VITE_BACKEND_URL;
 const News = () => {
 
   const [Articles,setArticles]=useState([]);
+   const [menuIcon,setMenuIcon]=useState(false);
+    const toggle=()=>{
+  setMenuIcon(e=>!e);
+ }
 useEffect(() => {
     const fetchNews = async () => {
       try {
@@ -40,11 +44,30 @@ useEffect(() => {
           <nav className="p-6">
             <div className="flex justify-between items-center">
               <div className="text-2xl font-bold tracking-wide">AniMate</div>
-              <div className="flex gap-8 text-lg">
-                <NavLink to="/" end className={({ isActive }) => isActive ? "underline-offset-1" : ""}>Home</NavLink>
-                <NavLink to="/Chat" end className={({ isActive }) => isActive ? "underline" : ""}>Chat</NavLink>
-                <NavLink to="/News" end className={({ isActive }) => isActive ? "underline" : ""}>News</NavLink>
-              </div>
+              <div className="md:hidden absolute top-6 right-6 z-50  " onClick={toggle}>
+                                     <div className="space-y-1">
+                                       <div className="w-8 h-1 bg-[#D8F4F6] rounded"></div>
+                                       <div className="w-8 h-1 bg-[#D8F4F6] rounded"></div>
+                                       <div className="w-8 h-1 bg-[#D8F4F6] rounded"></div>
+                                     </div>
+                                   </div>
+                             
+                                  
+                             {menuIcon && (
+                               <div className="absolute top-16 right-4 z-40 w-48 text-center text-white bg-black/80 rounded-lg shadow-xl py-4 px-3 flex flex-col space-y-3 text-lg font-medium md:hidden">
+                                 <NavLink to="/" end  className="hover:text-cyan-400" onClick={toggle}>Home</NavLink>
+                                 <NavLink to="/Chat" end  className="hover:text-cyan-400" onClick={toggle}>Chat</NavLink>
+                                 <NavLink to="/News" end  className="hover:text-cyan-400" onClick={toggle}>News</NavLink>
+                               </div>
+                             )}
+                             
+                                
+                             
+                                           <div className="flex gap- md:gap-15 text-lg max-md:hidden">
+                                             <NavLink to="/" end className={({ isActive }) => isActive ? "underline-offset-1" : ""}>Home</NavLink>
+                                             <NavLink to="/Chat" end className={({ isActive }) => isActive ? "underline" : ""}>Chat</NavLink>
+                                             <NavLink to="/News" end className={({ isActive }) => isActive ? "underline" : ""}>News</NavLink>
+                                           </div>
             </div>
           </nav>
 
