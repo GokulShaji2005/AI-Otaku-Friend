@@ -16,7 +16,7 @@ const News = () => {
     const fetchNews = async () => {
       try {
         const res = await axios.get(`${NewsApi}/animeNews`);
-        console.log("API response:", res.data);
+        console.log("API response:", res.data.articles);
         if (res.data && Array.isArray(res.data.articles)) {
           setArticles(res.data.articles);
         } else {
