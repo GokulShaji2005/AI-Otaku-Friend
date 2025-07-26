@@ -31,9 +31,11 @@ const Chat = () => {
  
   useEffect(() => {
    if(messageArrays.length===0){
-      const greeting="hello";
-       setMessageArrays([greeting])
-    };
+       const greeting = { sender:null, ai: "Konnichiwa! I’m your Otaku buddy! Let's talk anime and get charged ⚡️ 🎌" };
+    userMessageRef.current.push(greeting);
+    setMessageArrays([...userMessageRef.current]);
+  }
+    
   
     const msgFromBackend = (data) => {
       const AiMsgRef = { sender: null, ai: data };
@@ -43,7 +45,7 @@ const Chat = () => {
 
     socket.on("responseFromAI", msgFromBackend);
 
-    return () => socket.off("responseFromAI", msgFromBackend); // cleanup
+    return () => {socket.off("responseFromAI", msgFromBackend); }// cleanup
   }, []);
   const sendMessage = () => {
     if (inputMessage.trim() === "") {
@@ -188,7 +190,7 @@ const Chat = () => {
                           alt="AI Avatar"
                           className="w-10 h-10 rounded-full shadow-md"
                         />
-                        <div className="break-words max-w-[85%] md:max-w-[65%] bg-gradient-to-r from-white/15 to-white/10  text-white/90 text-sm px-4 py-2 rounded-lg rounded-tl-sm whitespace-pre-wrap">
+                        <div className="break-words max-w-[85%] md:max-w-[65%] bg-gradient-to-r from-white/30 to-white/20  text-white/90 text-sm px-4 py-2 rounded-lg rounded-tl-sm whitespace-pre-wrap">
                           {msg.ai}
                         </div>
                       </div>
