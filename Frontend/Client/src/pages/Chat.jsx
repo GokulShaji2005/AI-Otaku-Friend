@@ -48,7 +48,7 @@ const Chat = () => {
     socket.on("responseFromAI", msgFromBackend);
 
     return () => {socket.off("responseFromAI", msgFromBackend); }// cleanup
-  }, []);
+}}, []);
   const sendMessage = () => {
     if (inputMessage.trim() === "") {
       return;
