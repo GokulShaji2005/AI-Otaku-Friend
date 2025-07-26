@@ -40,7 +40,7 @@ app.use(cors());
 app.use(express.json()); 
 
 // Routes
-app.get('/animeNews', router); 
+app.use('/animeNews', router); 
 
 
 server.listen(PORT, () => {

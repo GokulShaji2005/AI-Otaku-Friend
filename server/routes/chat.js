@@ -7,8 +7,7 @@ const router = express.Router();
 
 
 
-router.get('/',animeNews
-)
+router.get('/',animeNews)
 
 
 export default router;
