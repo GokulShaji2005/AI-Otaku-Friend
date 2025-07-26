@@ -64,12 +64,14 @@ const Chat = () => {
     userMessageRef.current.push(useMsgRef);
     setMessageArrays([...userMessageRef.current]);
     setInputMessage("");
+      if (socket.connected) {
     setTimeout(() => {
       const typingMsg = { sender: null, ai: "..." };
       userMessageRef.current.push(typingMsg);
       setMessageArrays([...userMessageRef.current]);
     }, 1000);
-  };
+  }
+
   const chatBottomRef = () => {
     ScrollRef.current?.scrollIntoView({ behavior: "smooth" });
   };
