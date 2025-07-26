@@ -39,7 +39,7 @@ const Chat = () => {
 
 
     const msgFromBackend = (data) => {
-         userMessageRef.current=userMessageRef.current.filter((msg)=>msg.ai!="Typing...");
+         userMessageRef.current=userMessageRef.current.filter((msg)=>msg.ai!="...");
       const AiMsgRef = { sender: null, ai: data };
       userMessageRef.current.push(AiMsgRef);
       setMessageArrays([...userMessageRef.current]);
@@ -55,7 +55,7 @@ const Chat = () => {
     }
 
     socket.emit("chatFromUser", inputMessage);
-    
+
   const typingMsg = { sender: null, ai: "..." };
     userMessageRef.current.push(typingMsg);
     setMessageArrays([...userMessageRef.current]);
