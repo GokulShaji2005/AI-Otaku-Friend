@@ -28,27 +28,31 @@ const Chat = () => {
     setMenuIcon((e) => !e);
   };
 
- 
   useEffect(() => {
-   if(messageArrays.length===0){
-       const greeting = { sender:null, ai: "Konnichiwa! I’m your Otaku buddy! Let's talk anime and get charged ⚡️ 🎌" };
-    userMessageRef.current.push(greeting);
-    setMessageArrays([...userMessageRef.current]);
-  
-
-
-
-    const msgFromBackend = (data) => {
-         userMessageRef.current=userMessageRef.current.filter((msg)=>msg.ai!="...");
-      const AiMsgRef = { sender: null, ai: data };
-      userMessageRef.current.push(AiMsgRef);
+    if (messageArrays.length === 0) {
+      const greeting = {
+        sender: null,
+        ai: "Konnichiwa! I’m your Otaku buddy! Let's talk anime and get charged ⚡️ 🎌",
+      };
+      userMessageRef.current.push(greeting);
       setMessageArrays([...userMessageRef.current]);
-    };
 
-    socket.on("responseFromAI", msgFromBackend);
+      const msgFromBackend = (data) => {
+        userMessageRef.current = userMessageRef.current.filter(
+          (msg) => msg.ai != "..."
+        );
+        const AiMsgRef = { sender: null, ai: data };
+        userMessageRef.current.push(AiMsgRef);
+        setMessageArrays([...userMessageRef.current]);
+      };
 
-    return () => {socket.off("responseFromAI", msgFromBackend); }// cleanup
-}}, []);
+      socket.on("responseFromAI", msgFromBackend);
+
+      return () => {
+        socket.off("responseFromAI", msgFromBackend);
+      }; // cleanup
+    }
+  }, []);
   const sendMessage = () => {
     if (inputMessage.trim() === "") {
       return;
@@ -56,15 +60,15 @@ const Chat = () => {
 
     socket.emit("chatFromUser", inputMessage);
 
-  
     const useMsgRef = { sender: inputMessage, ai: null };
     userMessageRef.current.push(useMsgRef);
     setMessageArrays([...userMessageRef.current]);
     setInputMessage("");
-    
-  const typingMsg = { sender: null, ai: "..." };
-    userMessageRef.current.push(typingMsg);
-    setMessageArrays([...userMessageRef.current]);
+    setTimeout(() => {
+      const typingMsg = { sender: null, ai: "..." };
+      userMessageRef.current.push(typingMsg);
+      setMessageArrays([...userMessageRef.current]);
+    }, 2000);
   };
   const chatBottomRef = () => {
     ScrollRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -128,7 +132,7 @@ const Chat = () => {
                 to="/"
                 end
                 className={({ isActive }) =>
-                  (isActive ? "underline-offset-1 " : "")
+                  isActive ? "underline-offset-1 " : ""
                 }
               >
                 Home
@@ -137,7 +141,7 @@ const Chat = () => {
                 to="/Chat"
                 end
                 className={({ isActive }) => (isActive ? "underline" : "")}
-                  onClick={() => toggle &&(window.location.href = "/Chat")}
+                onClick={() => toggle && (window.location.href = "/Chat")}
               >
                 Chat
               </NavLink>
@@ -196,8 +200,15 @@ const Chat = () => {
                           alt="AI Avatar"
                           className="w-10 h-10 rounded-full shadow-md"
                         />
-                        <div className="break-words max-w-[85%] md:max-w-[65%] bg-gradient-to-r from-white/30 to-white/20  text-white/90 text-sm px-4 py-2 rounded-lg rounded-tl-sm whitespace-pre-wrap">
-                          {msg.ai}
+
+                        <div className="break-words max-w-[85%] md:max-w-[65%] bg-gradient-to-r from-white/30 to-white/20 text-white/90 text-sm px-4 py-2 rounded-lg rounded-tl-sm whitespace-pre-wrap">
+                          {msg.ai === "..." ? (
+                            <span className="animate-blink text-gray-400 ">
+                              ...
+                            </span>
+                          ) : (
+                            msg.ai
+                          )}
                         </div>
                       </div>
                     )}
