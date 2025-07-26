@@ -6,7 +6,7 @@ import { io } from "socket.io-client";
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
-const socket = io(import.meta.env.VITE_SOCKET_URL);
+const socket = io(import.meta.env.VITE_API_URL);
 
 socket.on("connect", () => {
   console.log("Client connected", socket.id);

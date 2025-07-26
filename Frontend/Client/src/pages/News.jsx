@@ -4,7 +4,7 @@ import axios from "axios";
 
 import { useState } from "react";
 import { useEffect } from "react";
-const NewsApi = import.meta.env.VITE_BACKEND_URL;
+const NewsApi = import.meta.env.VITE_API_URL;
 
 const News = () => {
   const [Articles, setArticles] = useState([]);
