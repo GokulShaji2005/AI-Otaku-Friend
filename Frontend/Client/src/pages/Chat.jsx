@@ -35,9 +35,17 @@ const Chat = () => {
     userMessageRef.current.push(greeting);
     setMessageArrays([...userMessageRef.current]);
   }
+  if (messageArrays.length === 1) {
+
+    const typingMsg = { sender: null, ai: "Typing..." };
+    userMessageRef.current.push(typingMsg);
+    setMessageArrays([...userMessageRef.current]);
+  }
+
     
   
     const msgFromBackend = (data) => {
+         userMessageRef.current=userMessageRef.current.filter((msg)=>msg.ai!="Typing...");
       const AiMsgRef = { sender: null, ai: data };
       userMessageRef.current.push(AiMsgRef);
       setMessageArrays([...userMessageRef.current]);
