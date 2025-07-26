@@ -1,6 +1,8 @@
-
+import axios from 'axios';
 
 import './App.css'
+const BASE_URL = import.meta.env.VITE_API_URL;
+axios.get(`${BASE_URL}/animeNews`);
 
 import {
   createBrowserRouter,
