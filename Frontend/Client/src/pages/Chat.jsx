@@ -68,7 +68,7 @@ const Chat = () => {
       const typingMsg = { sender: null, ai: "..." };
       userMessageRef.current.push(typingMsg);
       setMessageArrays([...userMessageRef.current]);
-    }, 2000);
+    }, 1000);
   };
   const chatBottomRef = () => {
     ScrollRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -203,7 +203,7 @@ const Chat = () => {
 
                         <div className="break-words max-w-[85%] md:max-w-[65%] bg-gradient-to-r from-white/30 to-white/20 text-white/90 text-sm px-4 py-2 rounded-lg rounded-tl-sm whitespace-pre-wrap">
                           {msg.ai === "..." ? (
-                            <span className="animate-blink text-gray-400 ">
+                            <span className="animate-blink text-gray-400 text-2xl ">
                               ...
                             </span>
                           ) : (
