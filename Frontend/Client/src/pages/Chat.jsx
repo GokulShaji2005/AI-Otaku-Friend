@@ -59,8 +59,7 @@ const Chat = () => {
   const typingMsg = { sender: null, ai: "..." };
     userMessageRef.current.push(typingMsg);
     setMessageArrays([...userMessageRef.current]);
-  }
-    setInputMessage(inputMessage);
+  
     const useMsgRef = { sender: inputMessage, ai: null };
     userMessageRef.current.push(useMsgRef);
     setMessageArrays([...userMessageRef.current]);
