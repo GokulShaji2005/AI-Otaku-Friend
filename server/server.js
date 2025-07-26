@@ -17,18 +17,17 @@ import { animeNews } from './controllers/animeNews.js';
 const app = express();
 const server=http.createServer(app);
 const io= new Server(server,{
+  // cors:{
+  //   origin:"http://localhost:5173",
+  //   methods:["GET","POST"],
+  // },
+
   cors:{
-    origin:"http://localhost:5173",
+    origin:"https://animate-ai-anime-friend.vercel.app/",
     methods:["GET","POST"],
   },
 })
-// // Emulate __dirname in ES module
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
-// Serve index.html from backend
-// app.get("/", (req, res) => {
-//   res.sendFile(path.join(__dirname, "index.html"));
-// });
+
 
 io.on("connection", chatSocket)
 
@@ -41,7 +40,7 @@ app.use(cors());
 app.use(express.json()); 
 
 // Routes
-app.use('/animeNews', router); 
+app.get('/animeNews', router); 
 
 
 server.listen(PORT, () => {
