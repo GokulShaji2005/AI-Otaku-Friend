@@ -170,7 +170,7 @@ const Chat = () => {
                     {msg.sender && (
                       <>
                         <div className="flex justify-end items-start gap-2 m-2">
-                          <div className=" break-words max-w-[85%] md:max-w-[65%] bg-white/50 text-white/90 text-sm px-4 py-2 rounded-lg  whitespace-pre-wrap">
+                          <div className=" break-words max-w-[85%] md:max-w-[65%] bg-gradient-to-r from-blue-500 to-blue-600 text-white/90 text-sm px-4 py-2 rounded-lg rounded-tr-sm  whitespace-pre-wrap">
                             {msg.sender}
                           </div>
                           <img
@@ -188,7 +188,7 @@ const Chat = () => {
                           alt="AI Avatar"
                           className="w-10 h-10 rounded-full shadow-md"
                         />
-                        <div className="break-words max-w-[85%] md:max-w-[65%] bg-white/50 text-white/90 text-sm px-4 py-2 rounded-lg whitespace-pre-wrap">
+                        <div className="break-words max-w-[85%] md:max-w-[65%] bg-gradient-to-r from-white/15 to-white/10  text-white/90 text-sm px-4 py-2 rounded-lg rounded-tl-sm whitespace-pre-wrap">
                           {msg.ai}
                         </div>
                       </div>
