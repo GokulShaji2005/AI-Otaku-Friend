@@ -153,7 +153,7 @@ const Chat = () => {
               Otaku AI Chat
             </h2>
             <div
-              className="flex-1 overflow-y-auto mb-2 md:mb-6 rounded-lg bg-white/10 p-2 md:p-4 space-y-2"
+              className="flex-1 overflow-y-auto mb-2 md:mb-6 rounded-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl p-2 md:p-4 space-y-2"
               style={{ minHeight: 0, maxHeight: "60vh" }}
             >
               {messageArrays &&
