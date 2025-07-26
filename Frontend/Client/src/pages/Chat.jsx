@@ -38,7 +38,7 @@ const Chat = () => {
       setMessageArrays([...userMessageRef.current]);
 
       const msgFromBackend = (data) => {
-       
+      
         const AiMsgRef = { sender: null, ai: data };
         userMessageRef.current.push(AiMsgRef);
         setMessageArrays([...userMessageRef.current]);
@@ -62,7 +62,7 @@ const Chat = () => {
     userMessageRef.current.push(useMsgRef);
     setMessageArrays([...userMessageRef.current]);
     setInputMessage("");
-
+  }
 
   const chatBottomRef = () => {
     ScrollRef.current?.scrollIntoView({ behavior: "smooth" });
