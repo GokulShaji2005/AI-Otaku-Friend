@@ -38,9 +38,7 @@ const Chat = () => {
       setMessageArrays([...userMessageRef.current]);
 
       const msgFromBackend = (data) => {
-        userMessageRef.current = userMessageRef.current.filter(
-          (msg) => msg.ai != "..."
-        );
+       
         const AiMsgRef = { sender: null, ai: data };
         userMessageRef.current.push(AiMsgRef);
         setMessageArrays([...userMessageRef.current]);
