@@ -68,7 +68,7 @@ const Chat = () => {
       const typingMsg = { sender: null, ai: "..." };
       userMessageRef.current.push(typingMsg);
       setMessageArrays([...userMessageRef.current]);
-    }, 1000);
+    }, 500);
   };
   const chatBottomRef = () => {
     ScrollRef.current?.scrollIntoView({ behavior: "smooth" });
