@@ -34,16 +34,13 @@ const Chat = () => {
        const greeting = { sender:null, ai: "Konnichiwa! I’m your Otaku buddy! Let's talk anime and get charged ⚡️ 🎌" };
     userMessageRef.current.push(greeting);
     setMessageArrays([...userMessageRef.current]);
-  }
-  if (messageArrays.length === 1) {
-
-    const typingMsg = { sender: null, ai: "Typing..." };
+  
+  const typingMsg = { sender: null, ai: "Typing..." };
     userMessageRef.current.push(typingMsg);
     setMessageArrays([...userMessageRef.current]);
   }
 
-    
-  
+
     const msgFromBackend = (data) => {
          userMessageRef.current=userMessageRef.current.filter((msg)=>msg.ai!="Typing...");
       const AiMsgRef = { sender: null, ai: data };
