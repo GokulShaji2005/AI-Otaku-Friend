@@ -35,10 +35,7 @@ const Chat = () => {
     userMessageRef.current.push(greeting);
     setMessageArrays([...userMessageRef.current]);
   
-  const typingMsg = { sender: null, ai: "Typing..." };
-    userMessageRef.current.push(typingMsg);
-    setMessageArrays([...userMessageRef.current]);
-  }
+
 
 
     const msgFromBackend = (data) => {
@@ -58,7 +55,11 @@ const Chat = () => {
     }
 
     socket.emit("chatFromUser", inputMessage);
-
+    
+  const typingMsg = { sender: null, ai: "..." };
+    userMessageRef.current.push(typingMsg);
+    setMessageArrays([...userMessageRef.current]);
+  }
     setInputMessage(inputMessage);
     const useMsgRef = { sender: inputMessage, ai: null };
     userMessageRef.current.push(useMsgRef);
