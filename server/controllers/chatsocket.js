@@ -28,7 +28,7 @@ socket.on("chatFromUser",async(message)=>{
     }
     catch (err) {
       console.error(" Socket Error:", err.message);
-      socket.emit("responseFromAI", " Error processing your message.");
+      socket.emit("responseFromAI", "I'm taking a little longer to think... hang tight, buddy!! ⏳✨"");
     }
   });
 
