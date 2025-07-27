@@ -39,23 +39,14 @@ export async function animeNews(req, res) {
       "That Time I Got Reincarnated as a Slime",
       "Pokemon",
 
-      "Digimon",
-      "One Punch Man",
-      "Classroom of the Elite",
+     
       "Attack on Titan",
       "Jujutsu Kaisen",
       "One Piece",
       "Solo Leveling",
       "Kaiju No. 8",
-      "My Hero Academia",
-      "Fairy Tail",
-      "Bleach",
-      "Tonikaku Kawaii",
-      "The Angel Next Door Spoils Me Rotten",
-      "The Genius Prince's Guide to Raising a Nation Out of Debt",
-      "Tokyo Revengers",
-      "Parasyte: The Maxim",
-      "Haikyuu!!",
+      
+      
       "Spy x Family",
       "Dandadan",
       "Mashle",
