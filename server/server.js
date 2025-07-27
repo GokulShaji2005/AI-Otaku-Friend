@@ -23,7 +23,7 @@ const io= new Server(server,{
   // },
 
   cors:{
-    origin:"https://animate-ai-anime-friend.pages.dev/",
+    origin:"https://animate-ai-anime-friend.pages.dev",
     methods:["GET","POST"],
   },
 })
