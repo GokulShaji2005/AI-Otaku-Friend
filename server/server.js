@@ -42,6 +42,9 @@ app.use(express.json());
 // Routes
 app.use('/animeNews', router); 
 
+socket.on("pingCheck", () => {
+  socket.emit("pongCheck");
+});
 
 server.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

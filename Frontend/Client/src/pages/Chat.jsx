@@ -16,6 +16,15 @@ socket.on("disconnect", () => {
   console.log("Client disconnected", socket.id);
 });
 
+function pingServer() {
+  const start = Date.now();
+  socket.emit("pingCheck");
+  socket.once("pongCheck", () => {
+    const latency = Date.now() - start;
+    console.log("⚡ Latency:", latency, "ms");
+  });
+}
+
 const mobileView = () => window.innerWidth < 768;
 const Chat = () => {
   const [inputMessage, setInputMessage] = useState("");
@@ -27,6 +36,15 @@ const Chat = () => {
   const toggle = () => {
     setMenuIcon((e) => !e);
   };
+useEffect(() => {
+  const interval = setInterval(() => {
+    if (socket.connected) {
+      pingServer();
+    }
+  }, 5000);
+
+  return () => clearInterval(interval);
+}, []);
 
   useEffect(() => {
     if (messageArrays.length === 0) {
