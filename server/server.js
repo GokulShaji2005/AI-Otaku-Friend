@@ -23,7 +23,7 @@ const io= new Server(server,{
   // },
 
   cors:{
-    origin:"https://animate-ai-anime-friend.vercel.app",
+    origin:"https://animate-ai-anime-friend.pages.dev/",
     methods:["GET","POST"],
   },
 })
@@ -42,9 +42,7 @@ app.use(express.json());
 // Routes
 app.use('/animeNews', router); 
 
-socket.on("pingCheck", () => {
-  socket.emit("pongCheck");
-});
+
 
 server.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
