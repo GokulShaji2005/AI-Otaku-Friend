@@ -135,14 +135,7 @@ const Chat = () => {
                 >
                   Chat
                 </NavLink>
-                <NavLink
-                  to="/News"
-                  end
-                  className="hover:text-cyan-400 "
-                  onClick={toggle}
-                >
-                  News
-                </NavLink>
+            
               </div>
             )}
 
@@ -164,13 +157,7 @@ const Chat = () => {
               >
                 Chat
               </NavLink>
-              <NavLink
-                to="/News"
-                end
-                className={({ isActive }) => (isActive ? "underline" : "")}
-              >
-                News
-              </NavLink>
+          
             </div>
           </div>
         </nav>
