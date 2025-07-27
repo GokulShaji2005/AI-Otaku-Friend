@@ -82,10 +82,9 @@ const Chat = () => {
 
     const useMsgRef = { sender: inputMessage, ai: null };
     userMessageRef.current.push(useMsgRef);
-setTimeout(()=>{
+
       const typingMsg = { sender: null, ai: "..." };
     userMessageRef.current.push(typingMsg);
-},200)
 
     setMessageArrays([...userMessageRef.current]);
     setInputMessage("");
