@@ -23,7 +23,7 @@ const io= new Server(server,{
   // },
 
   cors:{
-    origin:"https://animate-ai-anime-friend.vercel.app/",
+    origin:"https://animate-ai-anime-friend.vercel.app",
     methods:["GET","POST"],
   },
 })
