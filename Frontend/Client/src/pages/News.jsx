@@ -107,18 +107,7 @@ const News = () => {
 
         {Articles.length == 0 ? (
           <div className="flex flex-col items-center justify-center py-25">
-            {/* <div className="loader mb-4"></div>
-            <div class="loader-inner"></div>
-        <div class="loader-dots">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-        </div> */}
+          
             <div class="loader">
               <div class="loader-inner"></div>
               <div class="loader-dots"></div>

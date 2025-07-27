@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { FaSquareGithub } from "react-icons/fa6";
-
+// import './App.css'
 import { useState } from "react";
 import { io } from "socket.io-client";
 import { useEffect } from "react";
@@ -8,6 +8,7 @@ import { NavLink } from "react-router-dom";
 
 const socket = io(import.meta.env.VITE_API_URL);
 
+// const socket = io(import.meta.env.VITE_TESTING_API_URL);
 socket.on("connect", () => {
   console.log("Client connected", socket.id);
 });
@@ -16,16 +17,8 @@ socket.on("disconnect", () => {
   console.log("Client disconnected", socket.id);
 });
 
-function pingServer() {
-  const start = Date.now();
-  socket.emit("pingCheck");
-  socket.once("pongCheck", () => {
-    const latency = Date.now() - start;
-    console.log("⚡ Latency:", latency, "ms");
-  });
-}
-
 const mobileView = () => window.innerWidth < 768;
+
 const Chat = () => {
   const [inputMessage, setInputMessage] = useState("");
   const userMessageRef = useRef([]);
@@ -33,41 +26,52 @@ const Chat = () => {
   const ScrollRef = useRef(null);
   const IsMobileUi = mobileView();
   const [menuIcon, setMenuIcon] = useState(false);
+  const [isConnected, setConnected] = useState(false);
   const toggle = () => {
     setMenuIcon((e) => !e);
   };
-useEffect(() => {
-  const interval = setInterval(() => {
-    if (socket.connected) {
-      pingServer();
-    }
-  }, 5000);
-
-  return () => clearInterval(interval);
-}, []);
 
   useEffect(() => {
-    if (messageArrays.length === 0) {
-      const greeting = {
-        sender: null,
-        ai: "Konnichiwa! I’m your Otaku buddy! Let's talk anime and get charged ⚡️ 🎌",
-      };
+    const socketInstance = socket;
+    const socketConnection = () => {
+      setConnected(true);
+    };
+
+    const socketDisConnection = () => {
+      setConnected(false);
+    };
+
+    socketInstance.on("connect", socketConnection);
+    socketInstance.on("disconnect", socketDisConnection);
+    return () => {
+      socketInstance.off("connect", socketConnection);
+      socketInstance.off("disconnect", socketDisConnection);
+    };
+  }, []);
+
+  useEffect(() => {
+    const greeting = {
+      sender: null,
+      ai: "Konnichiwa! I’m your Otaku buddy! Let's talk anime and get charged ⚡️ 🎌",
+    };
+    if (userMessageRef.current.length === 0) {
       userMessageRef.current.push(greeting);
       setMessageArrays([...userMessageRef.current]);
-
-      const msgFromBackend = (data) => {
-      
-        const AiMsgRef = { sender: null, ai: data };
-        userMessageRef.current.push(AiMsgRef);
-        setMessageArrays([...userMessageRef.current]);
-      };
-
-      socket.on("responseFromAI", msgFromBackend);
-
-      return () => {
-        socket.off("responseFromAI", msgFromBackend);
-      }; // cleanup
     }
+    const msgFromBackend = (data) => {
+      userMessageRef.current = userMessageRef.current.filter(
+        (msg) => msg.ai !== "..."
+      );
+      const AiMsgRef = { sender: null, ai: data };
+      userMessageRef.current.push(AiMsgRef);
+      setMessageArrays([...userMessageRef.current]);
+    };
+    socket.off("responseFromAI");
+    socket.on("responseFromAI", msgFromBackend);
+
+    return () => {
+      socket.off("responseFromAI", msgFromBackend);
+    }; // cleanup
   }, []);
   const sendMessage = () => {
     if (inputMessage.trim() === "") {
@@ -78,9 +82,14 @@ useEffect(() => {
 
     const useMsgRef = { sender: inputMessage, ai: null };
     userMessageRef.current.push(useMsgRef);
+setTimeout(()=>{
+      const typingMsg = { sender: null, ai: "..." };
+    userMessageRef.current.push(typingMsg);
+},200)
+
     setMessageArrays([...userMessageRef.current]);
     setInputMessage("");
-  }
+  };
 
   const chatBottomRef = () => {
     ScrollRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -180,7 +189,16 @@ useEffect(() => {
               className="flex-1 overflow-y-auto mb-2 md:mb-6 rounded-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl p-2 md:p-4 space-y-2"
               style={{ minHeight: 0, maxHeight: "60vh" }}
             >
-              {messageArrays &&
+              {!isConnected ? (
+                <div className="flex flex-col items-center justify-center h-full py-24">
+                  <div className="loader">
+                    <div className="loader-inner"></div>
+                    <div className="loader-dots"></div>
+                  </div>
+               
+                </div>
+              ) : (
+                messageArrays &&
                 messageArrays.map((msg, index) => (
                   <div
                     className={
@@ -192,18 +210,16 @@ useEffect(() => {
                     ref={ScrollRef}
                   >
                     {msg.sender && (
-                      <>
-                        <div className="flex justify-end items-start gap-2 m-2">
-                          <div className=" break-words max-w-[85%] md:max-w-[65%] bg-gradient-to-r from-blue-500 to-blue-600 text-white/90 text-sm px-4 py-2 rounded-lg rounded-tr-sm  whitespace-pre-wrap">
-                            {msg.sender}
-                          </div>
-                          <img
-                            src="/assets/profile.webp"
-                            alt="Avatar"
-                            className="w-10 h-10 rounded-full shadow-md"
-                          />
+                      <div className="flex justify-end items-start gap-2 m-2">
+                        <div className="break-words max-w-[85%] md:max-w-[65%] bg-gradient-to-r from-blue-500 to-blue-600 text-white/90 text-sm px-4 py-2 rounded-lg rounded-tr-sm whitespace-pre-wrap">
+                          {msg.sender}
                         </div>
-                      </>
+                        <img
+                          src="/assets/profile.webp"
+                          alt="Avatar"
+                          className="w-10 h-10 rounded-full shadow-md"
+                        />
+                      </div>
                     )}
                     {msg.ai && (
                       <div className="flex justify-start items-start gap-2 m-2">
@@ -212,10 +228,9 @@ useEffect(() => {
                           alt="AI Avatar"
                           className="w-10 h-10 rounded-full shadow-md"
                         />
-
                         <div className="break-words max-w-[85%] md:max-w-[65%] bg-gradient-to-r from-white/30 to-white/20 text-white/90 text-sm px-4 py-2 rounded-lg rounded-tl-sm whitespace-pre-wrap">
                           {msg.ai === "..." ? (
-                            <span className="animate-blink text-gray-400 text-2xl ">
+                            <span className="animate-blink text-gray-400 text-2xl">
                               ...
                             </span>
                           ) : (
@@ -225,8 +240,10 @@ useEffect(() => {
                       </div>
                     )}
                   </div>
-                ))}
+                ))
+              )}
             </div>
+
             <div className="flex flex-col md:flex-row gap-2 md:gap-3 mt-2">
               <input
                 value={inputMessage}
