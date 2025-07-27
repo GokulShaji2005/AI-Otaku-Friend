@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { FaSquareGithub } from "react-icons/fa6";
-// import './App.css'
+
 import { useState } from "react";
 import { io } from "socket.io-client";
 import { useEffect } from "react";
@@ -8,7 +8,6 @@ import { NavLink } from "react-router-dom";
 
 const socket = io(import.meta.env.VITE_API_URL);
 
-// const socket = io(import.meta.env.VITE_TESTING_API_URL);
 socket.on("connect", () => {
   console.log("Client connected", socket.id);
 });
