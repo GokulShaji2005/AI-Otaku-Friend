@@ -26,9 +26,12 @@ const Chat = () => {
   const IsMobileUi = mobileView();
   const [menuIcon, setMenuIcon] = useState(false);
   const [isConnected, setConnected] = useState(false);
+  const InputTextRef=useRef(null);
   const toggle = () => {
     setMenuIcon((e) => !e);
   };
+
+
 
   useEffect(() => {
     const socketInstance = socket;
@@ -96,6 +99,32 @@ const Chat = () => {
   useEffect(() => {
     chatBottomRef();
   }, [messageArrays]);
+
+  useEffect(()=>{
+  const EnterKey=(e)=>{
+    if(e.key==="Enter"){
+      e.preventDefault();
+      sendMessage();
+    }
+  }
+    const InputAreaFocus=()=>{
+      if(InputTextRef.current){
+        InputTextRef.current.focus();
+      }
+    }
+
+    window.addEventListener("keydown",EnterKey);
+     window.addEventListener("click",InputAreaFocus);
+
+     InputAreaFocus();
+
+     return(()=>{
+      window.removeEventListener("keydown",EnterKey);
+      window.removeEventListener("click",InputAreaFocus);
+     })
+
+  
+},[sendMessage]);
 
   return (
     <div className="bg-[url('/assets/blueBackground.jpg')] bg-cover bg-center min-h-screen w-full flex flex-col">
