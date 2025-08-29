@@ -55,19 +55,30 @@ app.post("/webhook", async (req, res) => {
     console.log("Sent reply:", aiReplyBot);
 
   } catch (err) {
-    console.error("Bot Error:", err.message);
+  console.error("Bot Error:", err.message);
+  if (typeof chatID !== 'undefined') {
+    try {
       await sendMessage(chatID, "😅 Oops! My brain glitched, try again!");
-    res.sendStatus(200);
+    } catch(e) {
+      console.error("Failed to send error message:", e.message);
+    }
   }
+  res.sendStatus(200);
+}
+
 });
 
 
 
 async function sendMessage(chatId, text) {
-  await axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-  chat_id: chatId,
-  text,
-  });
+  try {
+    await axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+      chat_id: chatId,
+      text,
+    });
+  } catch (err) {
+    console.error("Failed to send message:", err.message);
+  }
 }
 }
 // const PORT_BOT = process.env.PORT_BOT || 3000;
