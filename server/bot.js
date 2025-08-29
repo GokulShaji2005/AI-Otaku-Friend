@@ -15,7 +15,7 @@ const systemPrompt = {
 };
 
 const chatHistories = {}; 
-
+export default function telegramBot(app){
 app.post("/webhook", async (req, res) => {
   try {
     // console.log("Incoming Telegram update:", JSON.stringify(req.body, null, 2));
@@ -69,10 +69,12 @@ async function sendMessage(chatId, text) {
   text,
   });
 }
+}
+// const PORT_BOT = process.env.PORT_BOT || 3000;
+// app.listen(PORT_BOT, () => console.log(`Bot server running on port ${PORT_BOT}`));
 
 
 
-
-app.listen(3000, () => console.log("Bot server running"));
+// app.listen(3000, () => console.log("Bot server running"));
 
 
