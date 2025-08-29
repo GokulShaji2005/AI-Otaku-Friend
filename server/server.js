@@ -9,7 +9,7 @@ import http from 'http'
 
 import router from './routes/chat.js'; 
 import chatSocket from './controllers/chatsocket.js';
-
+import telegramBot from './bot.js';
 
 const app = express();
 const server=http.createServer(app);
@@ -37,7 +37,7 @@ app.use(express.json());
 
 
 
-
+telegramBot(app);
 server.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
