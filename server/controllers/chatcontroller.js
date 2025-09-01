@@ -1,5 +1,6 @@
 import { Groq } from "groq-sdk";
 import axios from "axios";
+import 'dotenv/config'
 
 export async function chatWithOtakuAI(message) {
   const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
