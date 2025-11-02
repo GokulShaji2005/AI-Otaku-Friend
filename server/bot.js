@@ -81,7 +81,7 @@ async function sendMessage(chatId, text) {
   }
 }
 }
-// const PORT_BOT = process.env.PORT_BOT || 3000;
+
 // app.listen(PORT_BOT, () => console.log(`Bot server running on port ${PORT_BOT}`));
 
 
