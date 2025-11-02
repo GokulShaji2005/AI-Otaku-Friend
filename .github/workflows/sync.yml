@@ -16,10 +16,10 @@ jobs:
         run: |
           git config --global user.name "Gokul Shaji"
           git config --global user.email "gokulshaji2005@gmail.com"
-          git clone https://github.com/GokulShaji2005/Animate-telegramBot.git Bot
+          git clone https://github.com/gokulShaji2005/Animate-telegramBot.git Bot
           cp server/bot.js Bot/
           cd Bot
-          git add notes.txt
-          git commit -m "Auto-sync notes.txt"
-          git push https://<your-username>:${{ secrets.PERSONAL_TOKEN }}@github.com/<your-username>/<target-repo>.git main
+          git add bot.ja
+          git commit -m "Auto-sync bot.js
+          git push https://gokulshaji2005:${{ ANIMATE_TOKEN }}@github.com/gokulShaji2005/Animate-telegramBot.git main
 
