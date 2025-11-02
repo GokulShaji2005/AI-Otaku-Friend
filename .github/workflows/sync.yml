@@ -20,6 +20,6 @@ jobs:
           cp server/bot.js Bot/
           cd Bot
           git add bot.js
-          git commit -m "Auto-sync bot.js
+          git commit -m "Auto-sync bot.js"
           git push https://gokulshaji2005:${{ secrets.ANIMATE_TOKEN }}@github.com/gokulShaji2005/Animate-telegramBot.git main
 
