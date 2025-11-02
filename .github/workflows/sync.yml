@@ -19,7 +19,7 @@ jobs:
           git clone https://github.com/gokulShaji2005/Animate-telegramBot.git Bot
           cp server/bot.js Bot/
           cd Bot
-          git add bot.ja
+          git add bot.js
           git commit -m "Auto-sync bot.js
-          git push https://gokulshaji2005:${{ ANIMATE_TOKEN }}@github.com/gokulShaji2005/Animate-telegramBot.git main
+          git push https://gokulshaji2005:${{ secrets.ANIMATE_TOKEN }}@github.com/gokulShaji2005/Animate-telegramBot.git main
 
