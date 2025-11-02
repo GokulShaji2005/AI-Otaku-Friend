@@ -86,6 +86,6 @@ async function sendMessage(chatId, text) {
 
 
 
-// app.listen(3000, () => console.log("Bot server running"));
+
 
 
