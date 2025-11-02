@@ -12,13 +12,13 @@ jobs:
       - name: Checkout source repo
         uses: actions/checkout@v4
 
-      - name: Push file to target repo
+      - name: Push file to Animate-TelegramBot repo
         run: |
-          git config --global user.name "GokulShaji"
+          git config --global user.name "Gokul Shaji"
           git config --global user.email "gokulshaji2005@gmail.com"
-          git clone https://github.com/<your-username>/<target-repo>.git target
-          cp notes.txt target/
-          cd target
+          git clone https://github.com/GokulShaji2005/Animate-telegramBot.git Bot
+          cp server/bot.js Bot/
+          cd Bot
           git add notes.txt
           git commit -m "Auto-sync notes.txt"
           git push https://<your-username>:${{ secrets.PERSONAL_TOKEN }}@github.com/<your-username>/<target-repo>.git main
